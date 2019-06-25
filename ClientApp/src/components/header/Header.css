@@ -1,0 +1,39 @@
+#banner {
+    height: 37px;
+    background-color: #333333;
+}
+
+.logo {
+    /* border-right: 5px solid #666; */
+    /* background: #333333;
+    transform: skew(-5deg);
+    z-index: 99; */
+    margin-left: 2px;
+}
+
+#dash {
+    margin-left: -3%;
+    border-right: 5px solid #666;
+    background: #333333;
+    transform: skew(-5deg);
+    z-index: 99;
+}
+
+.text {
+    color: #FFF;
+    margin-top: 8px;
+    font-family: "Segoe UI", "Helvetica Neue", Roboto, "Open Sans", Helvetica, Arial, sans-serif, serif;
+    font-size: 12px;
+}
+
+@media only screen and (max-width: 380px) {
+    #dash {
+        margin-left: 4%;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    #dash {
+        margin-left: -5.5%;
+    }
+}

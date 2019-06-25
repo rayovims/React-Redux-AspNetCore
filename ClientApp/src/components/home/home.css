@@ -1,0 +1,22 @@
+#body-outline {
+    margin-top: 20px;
+    border: 1px solid #ECF4EF;
+    border-radius: 5px;
+}
+
+.btn-fix {
+    margin-bottom: 10px;
+}
+
+.btn {
+    color: #301504;
+    background-color: #FCB900;
+}
+
+.btn:hover {
+    color: grey;
+}
+
+label {
+    margin-left: 5px;
+}
