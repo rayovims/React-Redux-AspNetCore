@@ -42,7 +42,7 @@ namespace GroupManagement_redux_react_asp.Controllers
                 }
             }
 
-            return "Not FOUND";
+            return "No Results Found";
         }
     }
 }

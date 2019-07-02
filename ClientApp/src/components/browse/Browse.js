@@ -31,6 +31,8 @@ class Browse extends React.Component {
         if(this.props.buttonValue === null || this.props.radioValue === null) {
             return <Redirect to="/"/>
         }
+
+        
         return (
             <div>
                 <div className="row">

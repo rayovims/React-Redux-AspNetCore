@@ -1,8 +1,10 @@
 import React from 'react';
-import './button.css';
 import { connect } from 'react-redux';
 import { selectButton } from '../../actions';
 import { Redirect } from 'react-router-dom';
+
+import './button.css';
+
 
 class Button extends React.Component {
 

@@ -61,7 +61,7 @@ class Search extends React.Component {
         return (
             <div>
                 {this.handleInfo()}
-                <SearchInfo name={this.state.selected.name} location="Location"/>
+                <SearchInfo name="Name" location="Location"/>
                 <hr/>
                 <div className="row">
                     <div className="col-3"></div>
