@@ -3,16 +3,28 @@ import getAD from '../apis/getAD';
 export const searchAD = group => async dispatch => {
     let response;
     if (group === undefined) {
-        response = await getAD.get(`/group`);
+        response = await getAD.get(`/search`);
     } else {
-        response = await getAD.get(`/group/${group}`);
+    response = await getAD.get(`/search/${group}`);
     }
     dispatch({ type: "SEARCH_AD", payload: response.data});
 }
 
 export const browseAD = () => async dispatch => {
-    const response = await getAD.get("/SampleData/WeatherForecasts");
+    const response = await getAD.get("/browse/");
     dispatch({ type: "BROWSE_AD", payload: response.data});
+}
+
+export const searchUsersInGroup = (group) => async dispatch => {
+    const response = await getAD.get(`/user/${group}`);
+    dispatch({type: "USERS_IN_GROUP", payload: response.data});
+}
+
+export const selectDomain = (domain) => {
+    return {
+        type: "DOMAIN",
+        payload: domain
+    }
 }
 
 export const selectButton = (value) => {

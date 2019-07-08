@@ -1,26 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+// import { Redirect, withRouter } from 'react-router-dom';
 import { browseAD } from '../../actions';
 import './browse.css';
 
 class Browse extends React.Component {
-
     state = {
-        selected: ''
+        selected: '',
     }
 
     componentDidMount () {
+        //call function that is in redux store to browse Active Directory
         this.props.browseAD();
     }
 
-    renderBrowseData () {
+    renderBrowseData = () => {
+        //Radio button value here
+        console.log("props", this.props.radioValue);
         //need radio button value to look for specific group type
         return this.props.browseData.map((data) => {
             return (
-                <div className="list-group" key={data.temperatureF}>
-                    <div className="list-group-item" onClick={()=> this.setState({selected: data.summary})}>
-                        {data.summary}
+                <div className="list-group" key={data}>
+                    <div className="list-group-item" 
+                    onClick={() => {
+                        this.setState({selected: data})
+                        console.log(this)
+                    }}>
+                    {this.state.selected === data ? <div><i className="fas fa-folder-open"></i> {this.state.selected}</div> : <div><i className="fas fa-folder"></i> {data}</div>}
                     </div>
                 </div>
             )
@@ -28,8 +34,15 @@ class Browse extends React.Component {
     }
 
     render () {
-        if(this.props.buttonValue === null || this.props.radioValue === null) {
-            return <Redirect to="/"/>
+        let display;
+
+        // if(this.props.buttonValue === null || this.props.radioValue === null) {
+        //     return <Redirect to="/"/>
+        // }
+        if (this.state.selected === "") {
+            display = <div>Nothing Selected...</div>;
+        } else {
+            display = <div>{this.state.selected}</div>; 
         }
 
         
@@ -46,7 +59,6 @@ class Browse extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    {/* <div className="col-2"></div> */}
                     <div className="col-6">
                         <div>Browse AD folder Structure goes here</div>
                         <hr/>   
@@ -57,7 +69,7 @@ class Browse extends React.Component {
                         <hr/>
                         <div className="list-group">
                             <div className="list-group-item">
-                                {this.state.selected}
+                                {display}
                             </div>
                         </div>
                     </div>        

@@ -1,0 +1,26 @@
+/* .btn {
+    border: none;
+}
+
+.btn:hover {
+    background-color: #FCB910;
+}
+
+.button {
+    background-color: #FCB910;
+
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+    background: black;
+    box-shadow: #FCB910;
+} */
+
+#btn {
+    border: none;
+    margin-top: 10px;
+    background-color: #FCB910;
+    color: #333333;
+    box-shadow: none;
+    margin-bottom: 10px;
+}

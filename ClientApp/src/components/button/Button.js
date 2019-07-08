@@ -9,10 +9,6 @@ import './button.css';
 class Button extends React.Component {
 
     handleBtnClick () {
-        if(this.props.radioSelected === null) {
-            alert("Please choose a type");
-
-        }
         this.props.selectButton(this.props.value)
     }
 
@@ -22,11 +18,23 @@ class Button extends React.Component {
             return <Redirect to={`/${this.props.btnSelected}`}/>
         }
 
-        return (
+        if (this.props.radioSelected !== null) {
+            return (
             <button 
             className="btn"
             type="button"
             onClick={this.handleBtnClick.bind(this)}
+            >
+                {this.props.value}
+            </button>
+            )
+        }
+
+        return (
+            <button 
+            className="btn"
+            type="button"
+            disabled={true}
             >
                 {this.props.value}
             </button>

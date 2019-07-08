@@ -1,96 +1,111 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 // import { Redirect } from 'react-router-dom';
-import { searchAD } from '../../actions';
-import SearchInfo from '../../searchInfo/SearchInfo';
-import './search.css';
+import { searchAD } from "../../actions";
+// import SearchInfo from "../searchInfo/SearchInfo";
+import DomainSelector from "../domain-selector/DomainSelector";
+import MembersIngGroup from '../members-in-group/MembersInGroup';
+import "./search.css";
 
 class Search extends React.Component {
+  state = {
+    search: "",
+    name: "",
+    location: "",
+    selected: ''
+  };
 
-    state = {
-        search: '',
-        name: '',
-        location: '',
-        selected: []
-    }
-    
-    handleOnChange = (e) => {
-        this.setState({search: e.target.value})
-        this.props.searchAD(e.target.value);
-    }
+  componentDidMount() {
+    this.props.searchAD();
+  }
 
-    handleInfo = () => {
-        if (this.state.name !== '') {
-            return <SearchInfo name={this.state.name} location={this.state.location}/>
-        }
-    }
+  handleOnChange = e => {
+    this.setState({ search: e.target.value });
+    this.props.searchAD(e.target.value);
+  };
 
-    renderList = () => {
-        // console.log(this.props.searchData);
-        if (Array.isArray(this.props.searchData)) {
-            return this.props.searchData.map((data) => {
-                return (
-                    <div className="list-group" key={data}>
-                        <div className="list-group-item" onClick={()=> this.setState({selected: data})}>
-                            {data}
-                        </div>
-                    </div>
-                )
-            })
-        }
+  renderList = () => {
+    if (Array.isArray(this.props.searchData)) {
+      return this.props.searchData.map(data => {
         return (
-            <div id="search" className="list-group" key={this.props.searchData}>
-                <div className="list-group-item" onClick={() => this.setState({selected: {"name": this.props.searchData}})}>
-                    {this.props.searchData}
-                </div>
+          <div className="list-group" key={data}>
+            <div
+              className="list-group-item"
+              onClick={() => this.setState({ selected: data })}
+            >
+              {data}
             </div>
-        )
+          </div>
+        );
+      });
     }
+    return (
+      <div id="search" className="list-group" key={this.props.searchData}>
+        <div
+          className="list-group-item"
+          onClick={() => this.setState({selected: this.props.searchData})}
+        >
+          {this.props.searchData}
+        </div>
+      </div>
+    );
+  };
 
-    componentDidUpdate () {
-        console.log("selected: ", this.state.selected);
-        if (this.state.selected.length === 0) {
-            console.log("CLEAR");
-        } else console.log(this.state.selected.name)
+  handleDomain = () => {
+    if (this.props.domainSelector === null) {
+      return <DomainSelector />;
+    } 
+    else if (this.state.selected) {
+        return <MembersIngGroup group={this.state.selected}/>
     }
-
-    render () {
-        // if(this.props.buttonValue === null || this.props.radioValue === null) {
-        //     return <Redirect to="/"/>
-        // }
-        return (
-            <div>
-                {this.handleInfo()}
-                <SearchInfo name="Name" location="Location"/>
-                <hr/>
-                <div className="row">
-                    <div className="col-3"></div>
-                    <div className="col-6 text-center" style={{marginBottom: "15px"}}>
-                        <input
-                            className="form-control"
-                            value={this.state.value}
-                            onChange={e => this.handleOnChange(e)}
-                            spellCheck="false"
-                        />       
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-2"></div>
-                    <div className="col-8 text-center" id="scroll">
-                        {this.renderList()}
-                    </div>
-                </div>
+    else 
+    {
+      return (
+        <div>
+          <div className="row">
+            <div className="col-3" />
+            <div className="col-6 text-center" style={{ marginBottom: "15px", marginTop: "15px" }}>
+              <input
+                className="form-control"
+                value={this.state.value}
+                onChange={e => this.handleOnChange(e)}
+                spellCheck="false"
+              />
             </div>
-        )
+          </div>
+          <div className="row">
+            <div className="col-2" />
+            <div className="col-8 text-center" id="scroll">
+              {this.renderList()}
+            </div>
+          </div>
+        </div>
+      );
     }
+  };
+
+  render() {
+    // if(this.props.buttonValue === null || this.props.radioValue === null) {
+    //     return <Redirect to="/"/>
+    // }
+    return (
+      <div style={{textAlign: "center"}}>
+        {this.handleDomain()}
+      </div>
+    );
+  }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        buttonValue: state.selectedBtnReducer,
-        radioValue: state.selectRadioReducer,
-        searchData: state.searchAD
-    }
-}
+const mapStateToProps = state => {
+  return {
+    buttonValue: state.selectedBtnReducer,
+    radioValue: state.selectRadioReducer,
+    searchData: state.searchAD,
+    domainSelector: state.selectDomainReducer
+  };
+};
 
-export default connect(mapStateToProps, {searchAD})(Search);
+export default connect(
+  mapStateToProps,
+  { searchAD }
+)(Search);

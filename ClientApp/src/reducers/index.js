@@ -36,9 +36,29 @@ const selectedBtnReducer = (state = null, action) => {
     }
 }
 
+const selectDomainReducer = (state = null, action) => {
+    switch(action.type) {  
+        case "DOMAIN":
+            return action.payload;
+        default:
+            return state
+    }
+}
+
+const getUsersReducer = (state = [], action) => {
+    switch (action.type) {
+        case "USERS_IN_GROUP":
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     selectRadioReducer,
     selectedBtnReducer,
     browseAD,
-    searchAD
+    searchAD,
+    selectDomainReducer,
+    getUsersReducer
 })

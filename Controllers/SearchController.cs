@@ -9,40 +9,40 @@ namespace GroupManagement_redux_react_asp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GroupController : ControllerBase
+    public class SearchController : ControllerBase
     {
-        [HttpGet] 
-        public ActionResult<IEnumerable<string>> Get ()
+ 
+        [HttpGet]
+
+        public ActionResult<string> Get()
         {
-            string[] names = new string[50];
-
-            for (int i = 0; i < 50; i++)
-            {
-                names[i] = i.ToString();
-            }
-
-            return names;
+            return "Start typing to enable search";
         }
 
         [HttpGet("{group}")]
+
         public ActionResult<string> Get(string group)
         {
-            string[] names = new string[50];
+
+            Console.WriteLine(group);
+            string[] groups = new string[50];
 
             for (int i = 0; i < 50; i++)
             {
-                names[i] = i.ToString();
+                groups[i] = "Group " + i.ToString();
             }
+            //figure out a way to enable search after first 3 characters
 
-            for (int i = 0; i < names.Length; i++)
+            for (int i = 0; i < groups.Length; i++)
             {
-                if (names[i] == group)
+                if (groups[i] == group)
                 {
                     return group;
                 }
             }
 
             return "No Results Found";
+
         }
     }
 }

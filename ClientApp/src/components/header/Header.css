@@ -11,6 +11,10 @@
     margin-left: 2px;
 }
 
+.logo:hover {
+    cursor: pointer;
+}
+
 #dash {
     margin-left: -3%;
     border-right: 5px solid #666;
