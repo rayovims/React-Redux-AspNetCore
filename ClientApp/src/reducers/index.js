@@ -18,6 +18,15 @@ const browseAD = (state = [], action) => {
     }
 }
 
+const searchUserReducer = (state = null, action) => {
+    switch (action.type) {
+        case "SEARCH_USER":
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 const selectRadioReducer = (state = null, action ) => {
     switch (action.type) {
         case "RADIO_VALUE":
@@ -60,5 +69,6 @@ export default combineReducers({
     browseAD,
     searchAD,
     selectDomainReducer,
-    getUsersReducer
+    getUsersReducer,
+    searchUserReducer
 })

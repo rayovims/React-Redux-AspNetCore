@@ -13,16 +13,31 @@ namespace GroupManagement_redux_react_asp.Controllers
     {
         [HttpGet("{group}")]
 
-        public ActionResult<IEnumerable<string>> Get (string group)
+        public ActionResult<IEnumerable<Object>> Get(string group)
         {
-            string[] users = new string[50];
-
+            //do something with the group variable so it can get all the users this is for testing purposes. I need the group name exactly and location
+            User[] user = new User[50];
             for (int i = 0; i < 50; i++)
             {
-                users[i] = "User " + i.ToString();
+                user[i] = new User(i.ToString(), i, i.ToString());
+
             }
 
-            return users;
+            return user;
+        }
+    }
+
+    public class User
+    {
+        public string Name { get; set; }
+        public int Id { get; set; }
+        public string Account { get; set; }
+
+        public User(string name, int id, string account)
+        {
+            Name = name;
+            Id = id;
+            Account = account;
         }
     }
 }

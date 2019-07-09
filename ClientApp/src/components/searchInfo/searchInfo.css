@@ -1,5 +1,5 @@
-.display {
+#displays {
     word-wrap: break-word;
     border: 1px solid #ccc;
-    border-radius: 16px;
+    padding: 5px;
 }

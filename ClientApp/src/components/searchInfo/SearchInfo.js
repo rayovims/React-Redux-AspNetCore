@@ -6,11 +6,11 @@ const SearchInfo = (props) => {
         <div className="row">
             <div className="col-6 text-center">
                 <label>Group Name</label>
-                <div className="display">{props.name}</div>
+                <div id="displays">{props.name}</div>
             </div>
             <div className="col-6 text-center">
-                <label>Display Location</label>
-                <div className="display">{props.location}</div>
+                <label>Location</label>
+                <div id="displays">{props.location}</div>
             </div>
         </div>
     )

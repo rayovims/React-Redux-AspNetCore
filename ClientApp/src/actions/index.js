@@ -10,6 +10,11 @@ export const searchAD = group => async dispatch => {
     dispatch({ type: "SEARCH_AD", payload: response.data});
 }
 
+export const searchUser = user => async dispatch => {
+    const response = await getAD.get(`/find/${user}`);
+    dispatch({ type: "SEARCH_USER", payload: response.data});
+}
+
 export const browseAD = () => async dispatch => {
     const response = await getAD.get("/browse/");
     dispatch({ type: "BROWSE_AD", payload: response.data});
