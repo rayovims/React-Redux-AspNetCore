@@ -15,9 +15,28 @@ export const searchUser = user => async dispatch => {
     dispatch({ type: "SEARCH_USER", payload: response.data});
 }
 
-export const browseAD = () => async dispatch => {
-    const response = await getAD.get("/browse/");
-    dispatch({ type: "BROWSE_AD", payload: response.data});
+//browsing for groups
+
+export const getOus = () => async dispatch => {
+    const response = await getAD.get("/ou");
+    dispatch({ type: "GET_OU", payload: response.data});
+}
+
+export const getTypes = ou => async dispatch => {
+    const response = await getAD(`/type/${ou}`);
+    dispatch({type: "GET_TYPE", payload: response.data});
+}
+
+export const getGroups = (ou, type) => async dispatch => {
+    const response = await getAD(`browsegroups/${ou}/${type}`);
+    dispatch({type: "GET_GROUPS", payload: response.data});
+}
+
+//ends here
+
+export const browseUsers = () => async  dispatch => {
+    const response = await getAD.get("/browseusers");
+    dispatch({ type: "BROWSE_USERS", payload: response.data});
 }
 
 export const searchUsersInGroup = (group) => async dispatch => {

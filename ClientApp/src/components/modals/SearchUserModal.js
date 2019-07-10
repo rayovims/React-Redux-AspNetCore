@@ -2,8 +2,9 @@ import React from "react";
 import { Modal } from 'react-bootstrap';
 import { searchUser } from '../../actions';
 import { connect } from 'react-redux';
+import './modal.css';
 
-class Modals extends React.Component {
+class SearchUserModal extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -25,7 +26,7 @@ class Modals extends React.Component {
   }
 
   searchUser = (e) => {
-    this.setState({userName: e.target.value});
+      this.setState({userName: e.target.value});
   }
 
   renderUsers = () => {
@@ -55,7 +56,7 @@ class Modals extends React.Component {
           Add (Search)
         </button>
 
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal show={this.state.show} onHide={this.handleClose} size="lg" centered>
           <Modal.Header closeButton>
             <Modal.Title>Search for user</Modal.Title>
           </Modal.Header>
@@ -92,4 +93,4 @@ const mapStateToProps = (state) => {
     return {user : state.searchUserReducer};
 }
 
-export default connect(mapStateToProps, {searchUser})(Modals);
+export default connect(mapStateToProps, {searchUser})(SearchUserModal);

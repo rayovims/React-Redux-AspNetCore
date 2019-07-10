@@ -9,13 +9,12 @@ namespace GroupManagement_redux_react_asp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class BrowseUsersController : ControllerBase
     {
-        [HttpGet("{group}")]
+        [HttpGet]
 
-        public ActionResult<IEnumerable<object>> Get(string group)
+        public ActionResult<IEnumerable<object>> GetUsers ()
         {
-            //do something with the group variable so it can get all the users this is for testing purposes. I need the group name exactly and location
             User[] user = new User[50];
             for (int i = 0; i < 50; i++)
             {
@@ -26,4 +25,6 @@ namespace GroupManagement_redux_react_asp.Controllers
             return user;
         }
     }
+
+   
 }

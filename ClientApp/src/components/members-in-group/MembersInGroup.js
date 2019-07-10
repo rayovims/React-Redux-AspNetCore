@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { searchUsersInGroup } from '../../actions';
 import SearchInfo from '../searchInfo/SearchInfo';
 import "./members-in-group.css";
-import Modal from '../modal/Modal';
+import SearchUserModal from '../modals/SearchUserModal';
+import BrowseUserModal from '../modals/BrowseUserModal';
 
 class MembersInGroup extends React.Component {
 
     state = {
         selected: [],
     }
-
 
     componentDidMount() {
         this.props.searchUsersInGroup(this.props.group);
@@ -55,15 +55,6 @@ class MembersInGroup extends React.Component {
         console.log("Remove users selected");
     }
 
-    // browseUser = () => {
-    //     return <Modals/>
-    // }
-
-    // searchUser = () => {
-    //     return <Modals/>
-    // }
-
-
     render () {
         return (
             <div>
@@ -85,11 +76,10 @@ class MembersInGroup extends React.Component {
                 </div>
                 <div className="row" style={{marginTop: "10px"}}>
                     <div className="col-4 text-center">
-                        {/* <button onClick={this.searchUser} className="btn">Add (Search)</button> */}
-                        <Modal/>
+                        <SearchUserModal/>
                     </div>
                     <div className="col-4 text-center">
-                        <button onClick={this.browseUser} className="btn">Add (Browse)</button>
+                        <BrowseUserModal/>
                     </div>
                     <div className="col-4 text-center">
                         <button onClick={this.removeUser} className="btn">Remove</button>
