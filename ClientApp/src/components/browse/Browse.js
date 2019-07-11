@@ -1,14 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { getOus, getTypes, getGroups } from '../../actions';
 import SearchInfo from '../searchInfo/SearchInfo';
+import MembersInGroup from '../members-in-group/MembersInGroup';
+import DomainSelector from '../domain-selector/DomainSelector';
 import './browse.css';
 
 class Browse extends React.Component {
     state = {
         ou: '',
-        type: ''
+        type: '',
+        selected: ''
     }
 
     componentDidMount () {
@@ -16,31 +19,40 @@ class Browse extends React.Component {
         this.props.getOus();
     }
 
-    // renderTypes = (ou) => {
-        // this.props.getTypes(ou);
-        // return this.props.Type.map(type => {
-        //     return (
-        //         <div>
-        //             {type}
-        //         </div>
-        //     )
-        // })
-    // }
-
-    componentDidUpdate() {
-        console.log(this)
+    renderGroups = () => {
+        return this.props.Groups.map(group => {
+            return (
+                <div 
+                key={group}
+                className="row list-group list-group-item" 
+                style={{marginBottom: "5px"}}
+                onClick={() => this.setState({selected: group})}
+                >
+                    {group}
+                </div>
+            )
+        })
     }
 
-    renderStructure = () => {
-        return (
-            <div><i className="fas fa-folder-open"></i> <p>{this.state.ou}</p>
-                <div className="row">
-                    <div className="list-group list-group-item">
-                        {this.props.Type}
-                    </div>
-                </div> 
-            </div> 
-        )
+    renderTypes = () => {
+        return this.props.Type.map(type => {
+            return (
+            <div 
+            key={type} 
+            className="row list-group list-group-item"
+            id="fix-border"
+            onClick={() => {
+                this.setState({type});
+                this.props.getGroups(this.state.ou, type);
+            }}
+            >
+                {this.state.type === type ? 
+                    <div><i className="fas fa-folder-open"></i> {type}</div> :
+                    <div><i className="fas fa-folder"></i> {type}</div>
+                }
+            </div>
+            )
+        })
     }
 
     renderOus = () => {
@@ -51,64 +63,73 @@ class Browse extends React.Component {
             return (
                 <div className="list-group" key={data}>
                     <div className="list-group-item" 
-                    onClick={() => {
+                        id="fix-border"
+                        onClick={() => {
                         this.setState({ou: data});
-                        // this.renderTypes(data);
                         this.props.getTypes(data);
 
-                    }}
-                    style={{marginBottom: '5px'}}>
-                    {this.state.ou === data ? <div><i className="fas fa-folder-open"></i> <p>{this.state.ou}</p>
-                <div className="row">
-                    <div className="list-group list-group-item">
-                        {this.props.Type.map(types => {
-                            <div>{types}</div>
-                        })}
+                        }}
+                        style={{marginBottom: '5px'}}
+                    >
+                    {this.state.ou === data ? 
+                    <div><i className="fas fa-folder-open"></i> {this.state.ou}
+                        <div className="row">
+                            <div className="col-1"></div>
+                            <div className="col-10 list-group list-group-item" id="fix-border">
+                                {this.renderTypes()}
+                            </div>
+                        </div> 
                     </div>
-                </div> 
-            </div>
- : <div><i className="fas fa-folder"></i> {data}</div>}
+                    :
+                    <div> <i className="fas fa-folder"></i> {data}</div>
+                    }
                     </div>
                 </div>
             )
         })
     }
 
-    render () {
-        let display;
-
-        // if(this.props.buttonValue === null || this.props.radioValue === null) {
-        //     return <Redirect to="/"/>
-        // }
-        if (this.state.ou === "") {
-            display = <div>Nothing Selected...</div>;
-        } else {
-            display = <div>{this.state.ou}</div>; 
+    handleComponents = () => {
+        if(this.props.domainSelector === null) {
+            return <DomainSelector/>;
         }
-
-        
-        return (
-            <div>
+        else if (this.state.selected) {
+            return <MembersInGroup group={this.state.selected} />;
+        }
+        else {
+            return (
+                <div>
                 <SearchInfo
                     name="gg_ACSISup (US\gg_ACSISup)"
                     location="CN=gg_ACSISup,OU=Groups,OU=OUAdmins,DC=us,DC=ups,DC=com"
                 />
                 <hr/>
                 <div className="row" style={{marginBottom: '25px'}}>
-                    <div className="col-6">  
+                    <div className="col-5" id="overflow">  
                         <div>
                         {this.renderOus()}
                         </div> 
                     </div>
-                    <div className="col-6 text-center">
+                    <div className="col-7 text-center" id="overflow">
                         <div className="list-group">
-                            <div className="list-group-item">
-                                {display}
+                            <div className="list-group-item" id="fix-border">
+                                {this.renderGroups()}
                             </div>
                         </div>
                     </div>        
                 </div>
-            </div>
+                </div>
+            )
+        }
+    }
+
+    render () {
+        if(this.props.buttonValue === null || this.props.radioValue === null) {
+            return <Redirect to="/"/>
+        }
+        
+        return (
+            <div>{this.handleComponents()}</div>
         )
     }
 }
@@ -119,7 +140,8 @@ const mapStateToProps = (state) => {
         radioValue: state.selectRadioReducer,
         Ou: state.getOusReducer,
         Type: state.getTypesReducer,
-        Groups: state.getGroupsReducer
+        Groups: state.getGroupsReducer,
+        domainSelector: state.selectDomainReducer
     }
 }
 
