@@ -11,9 +11,9 @@ namespace GroupManagement_redux_react_asp.Controllers
     [ApiController]
     public class BrowseUsersController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("{ou}/{type}")]
 
-        public ActionResult<IEnumerable<object>> GetUsers ()
+        public ActionResult<IEnumerable<object>> GetUsers (string ou, string type)
         {
             User[] user = new User[50];
             for (int i = 0; i < 50; i++)

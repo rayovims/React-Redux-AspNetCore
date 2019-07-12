@@ -28,6 +28,7 @@ class MembersInGroup extends React.Component {
                     <div className="list-group col-10">
                         <div 
                         className={this.state.selected.includes(user) ? "list-group-item active" : "list-group-item"} 
+                        id="hover"
                         onClick={() => {
                             this.setState({ selected: [...this.state.selected, user]});
                             if(this.state.selected.includes(user)) {
@@ -41,7 +42,7 @@ class MembersInGroup extends React.Component {
                         >
                             <div className="row">
                                 <div className="col-5">
-                                    <p>{user.name}</p>
+                                    <p>User {user.name}</p>
                                 </div>
                                 <div className="col-1"></div>
                                 <div className="col-5" style={{textAlign: "left"}}>
@@ -67,7 +68,8 @@ class MembersInGroup extends React.Component {
                     location="CN=gg_ACSISup,OU=Groups,OU=OUAdmins,DC=us,DC=ups,DC=com"
                 />
                 <hr/>
-                <div id="fix-height">
+                <div  id="fix-height">
+                <div>
                     <div className="row" style={{marginTop: '10px'}}>
                         <div className="col-1"></div>
                         <div className="col-5 card-title" style={{textAlign: "left"}}>Name</div>
@@ -78,7 +80,7 @@ class MembersInGroup extends React.Component {
                     </div>
                     <hr id="fix"/>
                 </div>
-                <div className="row" style={{marginTop: "10px"}}>
+                <div className="row" style={{marginTop: "10px", marginBottom: '50px'}}>
                     <div className="col-4 text-center">
                         <SearchUserModal/>
                     </div>
@@ -89,13 +91,13 @@ class MembersInGroup extends React.Component {
                         <button onClick={this.removeUser} className="btn">Remove</button>
                     </div>
                 </div>
+                </div>
             </div>
         )
     }
 };
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         users: state.getUsersReducer
     };

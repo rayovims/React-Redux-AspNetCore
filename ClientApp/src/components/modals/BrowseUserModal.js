@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal } from 'react-bootstrap';
-import { getOus, getTypes, getGroups } from '../../actions';
+import { getOus, getTypes, browseUsers } from '../../actions';
 import { connect } from 'react-redux';
 import './modal.css';
 
@@ -31,19 +31,28 @@ class BrowseUserModal extends React.Component {
     this.props.getOus();
   }
   
-  renderGroups = () => {
-        return this.props.Groups.map(group => {
-            return (
-                <div 
-                key={group}
-                className="row list-group list-group-item" 
-                style={{marginBottom: "5px", marginRight: '10px'}}
-                onClick={() => this.setState({selected: group})}
-                >
-                    {group}
-                </div>
-            )
-        })
+  renderUsers = () => {
+    if(this.props.Users) {
+      return this.props.Users.map(user => {
+        return (
+            <div 
+            key={user.id}
+            className="row list-group list-group-item" 
+            style={{marginBottom: "5px", marginRight: '10px'}}
+            onClick={() => {
+              this.setState({selected: user});
+              this.handleClose();
+            }}
+            >
+              User {user.name}
+            </div>
+        )
+    })
+    }
+    else {
+      return <div></div>;
+    }
+        
     }
 
     renderTypes = () => {
@@ -55,7 +64,7 @@ class BrowseUserModal extends React.Component {
             id="fix-border"
             onClick={() => {
                 this.setState({type});
-                this.props.getGroups(this.state.ou, type);
+                this.props.browseUsers(this.state.ou, type);
             }}
             >
                 {this.state.type === type ? 
@@ -124,7 +133,7 @@ class BrowseUserModal extends React.Component {
                 </div>
                 <div className="col-1"></div>
                 <div className="col-5" id="overflow">
-                  <div>{this.renderGroups()}</div>
+                  <div>{this.renderUsers()}</div>
                 </div>
               </div>
           </Modal.Body>
@@ -139,8 +148,8 @@ const mapStateToProps = (state) => {
     return {
       Ou: state.getOusReducer,
       Type: state.getTypesReducer,
-      Groups: state.getGroupsReducer
+      Users: state.browseUsersReducer
     };
 }
 
-export default connect(mapStateToProps, {getOus, getTypes, getGroups})(BrowseUserModal);
+export default connect(mapStateToProps, {getOus, getTypes, browseUsers})(BrowseUserModal);

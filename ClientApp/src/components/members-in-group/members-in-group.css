@@ -7,9 +7,14 @@
     text-align: left;
 }
 
-/* #fix-height {
+#fix-height {
   height: 60vh;
-} */
+}
+
+#hover:hover {
+  background-color: #333333;
+  color: white;
+}
 
 #fix {
   margin-top: 30px;

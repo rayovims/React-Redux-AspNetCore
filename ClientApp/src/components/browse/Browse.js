@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import { Redirect } from 'react-router-dom';
 import { getOus, getTypes, getGroups } from '../../actions';
-import SearchInfo from '../searchInfo/SearchInfo';
 import MembersInGroup from '../members-in-group/MembersInGroup';
 import DomainSelector from '../domain-selector/DomainSelector';
 import './browse.css';
@@ -24,11 +23,12 @@ class Browse extends React.Component {
             return (
                 <div 
                 key={group}
-                className="row list-group list-group-item" 
+                className="row list-group list-group-item"
+                id="handleClick" 
                 style={{marginBottom: "5px"}}
                 onClick={() => this.setState({selected: group})}
                 >
-                    {group}
+                    Group {group}
                 </div>
             )
         })
@@ -98,12 +98,13 @@ class Browse extends React.Component {
         }
         else {
             return (
-                <div>
-                <SearchInfo
-                    name="gg_ACSISup (US\gg_ACSISup)"
-                    location="CN=gg_ACSISup,OU=Groups,OU=OUAdmins,DC=us,DC=ups,DC=com"
-                />
-                <hr/>
+                <div style={{marginTop: '25px'}}>
+                <div className="row">
+                    <div className="col-4"></div>
+                    <div className="col-4 text-center">
+                        <h4>Browse for groups</h4>
+                    </div>
+                </div>
                 <div className="row" style={{marginBottom: '25px'}}>
                     <div className="col-5" id="overflow">  
                         <div>
@@ -130,9 +131,6 @@ class Browse extends React.Component {
         
         return (
             <div>{this.handleComponents()}</div>
-            // <div>
-            //     <MembersInGroup/>
-            // </div>
         )
     }
 }

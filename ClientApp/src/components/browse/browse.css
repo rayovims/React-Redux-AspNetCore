@@ -8,6 +8,16 @@
     border: none;
 }
 
+#handleClick:active {
+    background-color: #333333;
+    color: white;
+}
+
+#handleClick:hover {
+    background-color: #333333;
+    color: white;
+}
+
 #overflow {
     margin-top: 10px;
     height: 70vh;

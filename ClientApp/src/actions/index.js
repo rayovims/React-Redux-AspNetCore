@@ -34,10 +34,14 @@ export const getGroups = (ou, type) => async dispatch => {
 
 //ends here
 
-export const browseUsers = () => async  dispatch => {
-    const response = await getAD.get("/browseusers");
+//browsing for users in group
+
+export const browseUsers = (ou, type) => async  dispatch => {
+    const response = await getAD.get(`/browseusers/${ou}/${type}`);
     dispatch({ type: "BROWSE_USERS", payload: response.data});
 }
+
+//ends here
 
 export const searchUsersInGroup = (group) => async dispatch => {
     const response = await getAD.get(`/user/${group}`);

@@ -39,6 +39,7 @@ const getGroupsReducer = (state = [], action) => {
 }
 
 //ends here
+
 const searchUserReducer = (state = null, action) => {
     switch (action.type) {
         case "SEARCH_USER":
@@ -48,6 +49,7 @@ const searchUserReducer = (state = null, action) => {
     }
 }
 
+//browsing for users
 const browseUsersReducer = (state = null, action) => {
     switch (action.type) {
         case "BROWSE_USERS":
@@ -56,6 +58,8 @@ const browseUsersReducer = (state = null, action) => {
             return state;
     }
 }
+
+//ends here
 
 const selectRadioReducer = (state = null, action ) => {
     switch (action.type) {
