@@ -1,0 +1,12 @@
+#fix-border {
+    border: none;
+}
+
+#overflow {
+    margin-top: 10px;
+    height: 70vh;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: left;
+}

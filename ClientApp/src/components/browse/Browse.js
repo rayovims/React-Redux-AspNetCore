@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { getOus, getTypes, getGroups } from '../../actions';
 import SearchInfo from '../searchInfo/SearchInfo';
 import MembersInGroup from '../members-in-group/MembersInGroup';
@@ -124,12 +124,15 @@ class Browse extends React.Component {
     }
 
     render () {
-        if(this.props.buttonValue === null || this.props.radioValue === null) {
-            return <Redirect to="/"/>
-        }
+        // if(this.props.buttonValue === null || this.props.radioValue === null) {
+        //     return <Redirect to="/"/>
+        // }
         
         return (
             <div>{this.handleComponents()}</div>
+            // <div>
+            //     <MembersInGroup/>
+            // </div>
         )
     }
 }

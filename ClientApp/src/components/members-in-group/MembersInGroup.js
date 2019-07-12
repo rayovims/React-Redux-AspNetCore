@@ -16,6 +16,10 @@ class MembersInGroup extends React.Component {
         this.props.searchUsersInGroup(this.props.group);
     }
 
+    componentDidUpdate () {
+        console.log(this);
+    }
+
     renderUsers = () => {
         return this.props.users.map((user) => {
             return (
@@ -63,7 +67,7 @@ class MembersInGroup extends React.Component {
                     location="CN=gg_ACSISup,OU=Groups,OU=OUAdmins,DC=us,DC=ups,DC=com"
                 />
                 <hr/>
-                <div>
+                <div id="fix-height">
                     <div className="row" style={{marginTop: '10px'}}>
                         <div className="col-1"></div>
                         <div className="col-5 card-title" style={{textAlign: "left"}}>Name</div>
@@ -91,6 +95,7 @@ class MembersInGroup extends React.Component {
 };
 
 const mapStateToProps = (state) => {
+    console.log(state);
     return {
         users: state.getUsersReducer
     };

@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal } from 'react-bootstrap';
-import { browseUsers } from '../../actions';
+import { getOus, getTypes, getGroups } from '../../actions';
 import { connect } from 'react-redux';
 import './modal.css';
 
@@ -13,7 +13,9 @@ class BrowseUserModal extends React.Component {
 
     this.state = {
       show: false,
-      userName: ''
+      ou: '',
+      type: '',
+      selected: ''
     };
   }
 
@@ -26,44 +28,80 @@ class BrowseUserModal extends React.Component {
   }
 
   componentDidMount () {
-      this.props.browseUsers();
+    this.props.getOus();
   }
-
-  componentDidUpdate () {
-      console.log(this.props);
-  }
-
-  renderBrowse = () => {
-      if(this.props.users === null) {
-          return (
-              <div>
-                  Loading...
-              </div>
-          )
-      } else {
-        return this.props.users.map(user => {
+  
+  renderGroups = () => {
+        return this.props.Groups.map(group => {
             return (
-                <div className="row" key={user.id}>
-                  <div className="col-4">
-                  </div>
-                  <div className="list-group col-8">
-                  <div className="list-group-item" style={{marginBottom: '5px'}}>
-                      <div className="row">
-                          <div className="col-1"></div>
-                          <div className="col-5">
-                              <p>{user.name}</p>
-                          </div>
-                          <div className="col-5">
-                              <p>Account {user.account}</p>
-                          </div>
-                      </div>    
-                  </div> 
-                  </div>
+                <div 
+                key={group}
+                className="row list-group list-group-item" 
+                style={{marginBottom: "5px", marginRight: '10px'}}
+                onClick={() => this.setState({selected: group})}
+                >
+                    {group}
                 </div>
             )
         })
-      }
-  }
+    }
+
+    renderTypes = () => {
+        return this.props.Type.map(type => {
+            return (
+            <div 
+            key={type} 
+            className="row list-group list-group-item"
+            id="fix-border"
+            onClick={() => {
+                this.setState({type});
+                this.props.getGroups(this.state.ou, type);
+            }}
+            >
+                {this.state.type === type ? 
+                    <div><i className="fas fa-folder-open"></i> {type}</div> :
+                    <div><i className="fas fa-folder"></i> {type}</div>
+                }
+            </div>
+            )
+        })
+    }
+
+  renderOus = () => {
+    //Radio button value here
+    // console.log("props", this.props.radioValue);
+    //need radio button value to look for specific group type
+    return this.props.Ou.map((data) => {
+        return (
+            <div className="list-group" key={data}>
+                <div className="list-group-item" 
+                    id="fix-border"
+                    onClick={() => {
+                    this.setState({ou: data});
+                    this.props.getTypes(data);
+
+                    }}
+                    style={{marginBottom: '5px'}}
+                >
+                {this.state.ou === data ? 
+                <div><i className="fas fa-folder-open"></i> {this.state.ou}
+                    <div className="row">
+                        <div className="col-1"></div>
+                        <div className="col-10 list-group list-group-item" id="fix-border">
+                            {this.renderTypes()}
+                        </div>
+                    </div> 
+                </div>
+                :
+                <div> <i className="fas fa-folder"></i> {data}</div>
+                }
+                </div>
+            </div>
+        )
+    })
+}
+
+  
 
   render() {
     return (
@@ -78,9 +116,15 @@ class BrowseUserModal extends React.Component {
           </Modal.Header>
           <Modal.Body>
               <div className="row">
+                {/* <div className="col-1"></div> */}
+                <div className="col-5" id="overflow">
+                    <div>
+                      {this.renderOus()}
+                    </div>
+                </div>
                 <div className="col-1"></div>
-                <div className="col-10">
-                    {this.renderBrowse()}
+                <div className="col-5" id="overflow">
+                  <div>{this.renderGroups()}</div>
                 </div>
               </div>
           </Modal.Body>
@@ -92,7 +136,11 @@ class BrowseUserModal extends React.Component {
 
 const mapStateToProps = (state) => {
     // console.log(state);
-    return {users : state.browseUsersReducer};
+    return {
+      Ou: state.getOusReducer,
+      Type: state.getTypesReducer,
+      Groups: state.getGroupsReducer
+    };
 }
 
-export default connect(mapStateToProps, {browseUsers})(BrowseUserModal);
+export default connect(mapStateToProps, {getOus, getTypes, getGroups})(BrowseUserModal);
